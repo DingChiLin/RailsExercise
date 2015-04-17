@@ -7,7 +7,9 @@ Demo::Application.routes.draw do
   #root :to => "events#index"
 
   #match ':controller(/:action(/:id(.:format)))', :via => [:get, :post, :put]
-  resources :events
+  resources :events do
+    resources :attendees, :controller => 'event_attendees'
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

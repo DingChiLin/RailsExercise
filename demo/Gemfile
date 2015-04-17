@@ -39,3 +39,5 @@ gem 'jquery-rails'
 
 gem 'strong_parameters'
 gem 'kaminari'
+gem 'colorize'
+gem 'thin'

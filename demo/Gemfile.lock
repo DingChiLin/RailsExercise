@@ -37,7 +37,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    colorize (0.7.5)
+    daemons (1.2.2)
     erubis (2.7.0)
+    eventmachine (1.0.7)
     execjs (2.5.2)
     hike (1.2.3)
     i18n (0.6.1)
@@ -96,6 +99,10 @@ GEM
       activemodel (~> 3.0)
       activesupport (~> 3.0)
       railties (~> 3.0)
+    thin (1.6.3)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0)
+      rack (~> 1.0)
     thor (0.19.1)
     tilt (1.4.1)
     treetop (1.4.15)
@@ -111,10 +118,12 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  colorize
   jquery-rails
   kaminari
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)
   sqlite3
   strong_parameters
+  thin
   uglifier (>= 1.0.3)

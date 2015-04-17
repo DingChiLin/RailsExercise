@@ -15,10 +15,12 @@ class EventsController < ApplicationController
 
   def create
     flash[:notice] = "event was successfully created"
+    logger.debug "Event_params: #{event_params}".green
     @event = Event.new(event_params)
+    logger.debug "@Event: #{@event.inspect}".green
 
     if @event.save
-      redirect_to events_path
+      redirect_to event_path(@event)
     else
       render :action => :new
     end
@@ -59,7 +61,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:name, :description)
+    params.require(:event).permit(:name, :description, :category_id)
   end
 
   def set_event
