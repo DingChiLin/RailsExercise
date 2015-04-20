@@ -3,6 +3,20 @@
 
 <p>Category: <%= @event.category_name %></p>
 <p><%= link_to 'Back to index', events_path %></p>
+<p>Group:
+<% @event.groups.each do |g| %>
+  <%= g.name %>
+<% end %>
+</p>
+
+<p>Status: <%= @event.status %></p>
+<p>
+<% if @event.closed? %>
+  <%= link_to '[Open]', event_state_path(@event ), :method => :post %>
+<% else %>
+  <%= link_to '[Close]', event_state_path(@event), :method => :delete %>
+<% end %>
+</p>
 
 <%= debug(@event) %>
 

@@ -25,3 +25,8 @@
   <% end %>
   </p>
 <% end %>
+
+<% for group in Group.find(:all) %>
+  <%= check_box_tag "event[group_ids][]", group.id %>
+  <%= group.name %>
+<% end %>

@@ -17,7 +17,7 @@ class EventsController < ApplicationController
     flash[:notice] = "event was successfully created"
     logger.debug "Event_params: #{event_params}".green
     @event = Event.new(event_params)
-    logger.debug "@Event: #{@event.inspect}".green
+    logger.debug "@Event: #{@event.inspect}".blue
 
     if @event.save
       redirect_to event_path(@event)
@@ -58,11 +58,37 @@ class EventsController < ApplicationController
     redirect_to events_path
   end
 
+  def latest
+    @events = Event.order("id DESC").limit(3)
+  end
+
+  def bulk_delete
+    Event.destroy_all
+    redirect_to events_path
+  end
+
+  def bulk_update
+    ids = Array(params[:ids])
+    events = ids.map{ |i| Event.find_by_id(i) }.compact
+
+    if params[:commit] == "Publish"
+      events.each{ |e| e.update_attributes( :status => "published" ) }
+    elsif params[:commit] == "Delete"
+      events.each{ |e| e.destroy }
+    end
+
+    redirect_to events_path
+  end
+
+  def dashboard
+    @event = Event.find(params[:id])
+  end
+
   private
 
   def event_params
-    logger.debug "Event_Params! #{params.inspect}".green
-    params.require(:event).permit(:name, :description, :category_id, :location_attributes => [:id, :name, :_destroy])
+    logger.debug "Event_Params! #{params.inspect}".red
+    params.require(:event).permit(:name, :description, :category_id, :location_attributes => [:id, :name, :_destroy], :group_ids => [])
   end
 
   def set_event

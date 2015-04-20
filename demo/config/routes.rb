@@ -8,8 +8,17 @@ Demo::Application.routes.draw do
 
   #match ':controller(/:action(/:id(.:format)))', :via => [:get, :post, :put]
   resources :events do
+    resource :state, :controller => 'event_states'
     resources :attendees, :controller => 'event_attendees'
     resource :location, :controller => 'event_locations'
+    collection do
+      get :latest
+      post :bulk_delete
+      post :bulk_update
+    end
+    member do
+        get :dashboard
+    end
   end
 
   # The priority is based upon order of creation:
