@@ -3,7 +3,17 @@ class EventsController < ApplicationController
   before_filter :set_event, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @events = Event.page(params[:page]).per(5)
+
+    if params[:keyword]
+      @events = Event.where( [ "name like ?", "%#{params[:keyword]}%" ] )
+    else
+      sort_by = (params[:order] == 'name') ? 'name' : 'created_at'
+      @events = Event.order(sort_by).all
+
+
+    end
+
+    @events = Kaminari.paginate_array(@events).page(params[:page]).per(5)
 
     respond_to do |format|
       format.html # index.html.erb

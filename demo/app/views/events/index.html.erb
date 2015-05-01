@@ -17,6 +17,11 @@
 <%= link_to 'latest event', latest_events_path %>
 <%= link_to "Atom feed", events_path(:format => :atom) %>
 
+<%= form_tag events_path, :method => :get do %>
+  <%= text_field_tag "keyword" %>
+  <%= submit_tag "Search" %>
+<% end %>
+
 <%= form_tag bulk_update_events_path do %>
 
   <ul>
@@ -34,5 +39,6 @@
 <% end %>
 
 <%= button_to "Delete All", bulk_delete_events_path, :method => :post %>
-
+<%= link_to 'Sort by Name', events_path( :order => "name") %>
+<%= link_to 'Sort by Default', events_path %>
 <%= paginate @events %>
