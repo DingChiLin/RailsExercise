@@ -6,6 +6,14 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    c = @article.comments.first
+    p "__________"
+    p [111,c.article.__id__]
+    c.with_lock{
+      p [222,c.article.__id__]
+    }
+    p [333,c.article.__id__]
+    p "__________"
   end
 
   def new
